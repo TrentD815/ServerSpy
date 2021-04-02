@@ -1,12 +1,4 @@
 // ----------- Ping Functions ----------------
-import ftpClient from 'ftp'
-
-class FTPClient {
-	create(host, port, user, password) {
-		this.config = { host, port, user, password };
-		return new ftpClient();
-	}
-}
 
 async function PingSampleVison(props) {
   return await $.get({
@@ -45,7 +37,7 @@ function PingLIMS(props) {
         200: () => { alert("server is online") },
         404: () => { alert("server is offline")}
       },
-      complete: (response) => {
+      complete: () => {
 
       }
   })
@@ -56,28 +48,22 @@ function PingFTP(props) {
     const user = props.connectionID
     const password = props.connectionPassword
     const port = null
+		const data = {host, user, password, port}
 
-    try {
-  			const connector = new FTPClient();
-
-  			const client = connector.create(host, port, user, password);
-
-        client.on('ready', (err) => {
-          console.log("Connection to FTP successful")
-          client.end();
-        });
-        client.connect(connector.config);
-        client.on('error', (err) => { console.error("Error connecting to FTP server. Credentials may be incorrect.")});
-    }
-    catch (err){
-      console.error(err)
-    }
-
+		$.get({
+			url: "http://localhost:4000/pingFTP",
+			data : data,
+			statusCode: {
+        200: () => { alert("FTP server is online")},
+        400: () => { alert("FTP server is offline")},
+      },
+			complete: () => { console.log("Done pinging")}
+		})
 }
 function PingEmail(props) {
   alert("pinging " + props.serverType)
   $.get({
-
+			url: props.serverLink + "/is-sample-vision-api",
   })
 }
 
