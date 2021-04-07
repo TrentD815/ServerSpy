@@ -1,4 +1,4 @@
-var app = require('../app');
+var app = require('./app');
 var debug = require('debug')('api:server');
 var http = require('http');
 var port = normalizePort(process.env.PORT || '4000');
@@ -48,5 +48,5 @@ function onListening() {
   var bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
-  console.log('Listening on http' + bind);
+  console.log('Listening on http ' + bind);
 }
