@@ -10,9 +10,8 @@ import Col from 'react-bootstrap/Col'
 import Dropdown from 'react-bootstrap/Dropdown'
 import DropdownButton from 'react-bootstrap/DropdownButton'
 import './index.css';
-import allServers from './servers.js'
-import {sortByDate, sortByAlphabetical, sortByStatus} from './sorting.js'
-import {PingSampleVison, PingLIMS, PingFTP, PingEmail} from './ping.js'
+import { sortByDate, sortByAlphabetical, sortByStatus } from './sorting.js'
+import { PingSampleVison, PingLIMS, PingFTP, PingEmail } from './ping.js'
 
 // Visually indicate either online or offline for server
 const Online = (props) => {
@@ -143,27 +142,7 @@ class ServerList extends React.Component {
         </Table>
     )
   }
-    componentDidMount() {
-        fetch("localhost:4100/servers")
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    this.setState({
-                        isLoaded: true,
-                        items: result.items
-                    });
-                },
-                // Note: it's important to handle errors here
-                // instead of a catch() block so that we don't swallow
-                // exceptions from actual bugs in components.
-                (error) => {
-                    this.setState({
-                        isLoaded: true,
-                        error
-                    });
-                }
-            )
-    }
+
 }
 
 // Background, Title, Sorting and Table
@@ -198,6 +177,26 @@ class App extends React.Component {
         Servers: sorted
     })
   }
+
+    async componentDidMount() {
+      try {
+          const serverURL = process.env.REACT_APP_SERVER_URL + "/servers"
+          console.log(serverURL)
+          let response = await fetch(serverURL)
+          const result = await response.json()
+          console.log(result)
+          this.setState({
+              isLoaded: true,
+              Servers: result
+          });
+      } catch (error) {
+          this.setState({
+              isLoaded: true,
+              error
+          });
+      }
+    }
+
   render() {
     return (
         <div id="AppContainer">
@@ -223,4 +222,4 @@ class App extends React.Component {
   }
 }
 //Render all parts of the app
-ReactDOM.render(<App Servers={allServers}/>, document.getElementById('root'));
+ReactDOM.render(<App Servers={[{}]}/>, document.getElementById('root'));

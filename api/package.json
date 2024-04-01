@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start-api": "node ./bin/www",
-    "dev": "node app.js"
+    "dev": "node --env-file=.env app.js"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",

@@ -3,3 +3,4 @@ package-lock.json
 /.idea/vcs.xml
 /.idea/ServerSpy.iml
 /.idea/modules.xml
+.env
