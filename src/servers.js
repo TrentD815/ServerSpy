@@ -6,8 +6,8 @@ const allServers = [
       "serverType" : "SampleVision",
       "serverLink" : "https://dev.limswizards.com:8084",
       "serverName" : "Trent's Dev Server",
-      "offlineSince" : new Date().toDateString(),
-      "lastChecked" : new Date().toDateString(),
+      "offlineSince" : "2024-03-30T00:00:00.000Z",
+      "lastChecked" : "2024-03-30T00:00:00.000Z",
       "port" : "8084"
     },
     {
@@ -15,8 +15,8 @@ const allServers = [
       "serverType" : "SampleVision",
       "serverLink" : "https://dev.limswizards.com:8085",
       "serverName" : "Adam Bennett's Dev Server",
-      "offlineSince" : new Date().toDateString(),
-      "lastChecked" : new Date().toDateString(),
+      "offlineSince" : "2024-03-30T00:00:00.000Z",
+      "lastChecked" : "2024-03-30T00:00:00.000Z",
       "port" : "8085"
     },
     {
@@ -24,8 +24,8 @@ const allServers = [
       "serverType" : "SampleVision",
       "serverLink" : "https://dev.limswizards.com:8082",
       "serverName" : "Adam Tran's Dev Server",
-      "offlineSince" : new Date().toDateString(),
-      "lastChecked" : new Date().toDateString(),
+      "offlineSince" : "2024-03-30T00:00:00.000Z",
+      "lastChecked" : "2024-03-30T00:00:00.000Z",
       "port" : "8082"
     },
     {
@@ -33,8 +33,8 @@ const allServers = [
       "serverType" : "SampleVision",
       "serverLink" : "https://dev.limswizards.com:8083",
       "serverName" : "Nevine's Dev Server",
-      "offlineSince" : new Date().toDateString(),
-      "lastChecked" : new Date().toDateString(),
+      "offlineSince" : "2024-03-30T00:00:00.000Z",
+      "lastChecked" : "2024-03-30T00:00:00.000Z",
       "port" : "8083"
     },
     {
@@ -42,8 +42,8 @@ const allServers = [
       "serverType" : "SampleVision",
       "serverLink" : "https://demo.limswizards.com",
       "serverName" : "Demo Server",
-      "offlineSince" : new Date().toDateString(),
-      "lastChecked" : new Date().toDateString(),
+      "offlineSince" : "2024-03-30T00:00:00.000Z",
+      "lastChecked" : "2024-03-30T00:00:00.000Z",
       "port" : ""
     },
     {
@@ -51,8 +51,8 @@ const allServers = [
       "serverType" : "SampleVision",
       "serverLink" : "https://test.limswizards.com",
       "serverName" : "Test Server",
-      "offlineSince" : new Date().toDateString(),
-      "lastChecked" : new Date().toDateString(),
+      "offlineSince" : "2024-03-30T00:00:00.000Z",
+      "lastChecked" : "2024-03-30T00:00:00.000Z",
       "port" : ""
     },
     {
@@ -60,8 +60,8 @@ const allServers = [
       "serverType" : "LIMS",
       "serverLink" : "http://dev.limswizards.com:56104",
       "serverName" : "SampleManager Server",
-      "offlineSince" : new Date().toDateString(),
-      "lastChecked" : new Date().toDateString(),
+      "offlineSince" : "2024-03-30T00:00:00.000Z",
+      "lastChecked" : "2024-03-30T00:00:00.000Z",
       "connectionID" : "system",
       "connectionPassword" : "manager",
       "databaseName" : "",
@@ -73,8 +73,8 @@ const allServers = [
       "serverType" : "LIMS",
       "serverLink" : "http://52.170.251.82:8180/labvantage/rest",
       "serverName" : "Labvantage Server",
-      "offlineSince" : new Date().toDateString(),
-      "lastChecked" : new Date().toDateString(),
+      "offlineSince" : "2024-03-30T00:00:00.000Z",
+      "lastChecked" : "2024-03-30T00:00:00.000Z",
       "connectionID" : "admin",
       "connectionPassword" : "admin",
       "databaseName" : "lvcustportal2",
@@ -86,8 +86,8 @@ const allServers = [
       "serverType" : "LIMS",
       "serverLink" : "dev.limswizards.com:8080/LabWare-702I/services",
       "serverName" : "Labware Server",
-      "offlineSince" : new Date().toDateString(),
-      "lastChecked" : new Date().toDateString(),
+      "offlineSince" : "2024-03-30T00:00:00.000Z",
+      "lastChecked" : "2024-03-30T00:00:00.000Z",
       "connectionID" : "system",
       "connectionPassword" : "manager",
       "databaseName" : "LW7_Base",
@@ -99,8 +99,8 @@ const allServers = [
       "serverType" : "LIMS",
       "serverLink" : "http://vpn.csolsinc.com:57003/STARLIMS11.STARLIMS.QualityMfg/REST_API.",
       "serverName" : "Starlims Server",
-      "offlineSince" : new Date().toDateString(),
-      "lastChecked" : new Date().toDateString(),
+      "offlineSince" : "2024-03-30T00:00:00.000Z",
+      "lastChecked" : "2024-03-30T00:00:00.000Z",
       "connectionID" : "SV_INTERFACE",
       "connectionPassword" : "5Delaware!",
       "databaseName" : "SITE1",
@@ -112,8 +112,8 @@ const allServers = [
       "serverType" : "FTP",
       "serverLink" : "ftpcsols.eastus.cloudapp.azure.com",
       "serverName" : "FTP Server",
-      "offlineSince" : new Date().toDateString(),
-      "lastChecked" : new Date().toDateString(),
+      "offlineSince" : "2024-03-30T00:00:00.000Z",
+      "lastChecked" : "2024-03-30T00:00:00.000Z",
       "connectionID" : "ftpuser",
       "connectionPassword" : "N3wFTPCr3ds!",
       "port" : ""
@@ -123,8 +123,8 @@ const allServers = [
       "serverType" : "Email",
       "serverLink" : "smtp.gmail.com",
       "serverName" : "SMTP Email Server",
-      "offlineSince" : new Date().toDateString(),
-      "lastChecked" : new Date().toDateString(),
+      "offlineSince" : "2024-03-30T00:00:00.000Z",
+      "lastChecked" : "2024-03-30T00:00:00.000Z",
       "connectionID" : "developer@csolsinc.com",
       "connectionPassword" : "TBD",
       "port" : ""

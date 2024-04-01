@@ -1,7 +1,7 @@
 {
   "name": "serverspy",
   "version": "1.0.0",
-  "description": "Easily check which SampleVision servers are up and running",
+  "description": "Easily check which servers are up and running",
   "main": "index.js",
   "type": "module",
   "scripts": {
@@ -15,7 +15,6 @@
     "@craco/craco": "^7.1.0",
     "@tsparticles/react": "^3.0.0",
     "@tsparticles/slim": "^3.3.0",
-    "bent": "^7.3.12",
     "bootstrap": "^5.3.3",
     "ftp": "^0.3.10",
     "jquery": "^3.7.1",

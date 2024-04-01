@@ -23,12 +23,8 @@ const Offline = (props) => {
 }
 const Status = (props) => {
     const online = props.value;
-    if (online) {
-        return <Online/>
-    }
-    else {
-        return <Offline/>
-    }
+    if (online) { return <Online/> }
+    else { return <Offline/> }
 }
 
 const PingServer = async (props) => {
@@ -147,6 +143,27 @@ class ServerList extends React.Component {
         </Table>
     )
   }
+    componentDidMount() {
+        fetch("localhost:4100/servers")
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    this.setState({
+                        isLoaded: true,
+                        items: result.items
+                    });
+                },
+                // Note: it's important to handle errors here
+                // instead of a catch() block so that we don't swallow
+                // exceptions from actual bugs in components.
+                (error) => {
+                    this.setState({
+                        isLoaded: true,
+                        error
+                    });
+                }
+            )
+    }
 }
 
 // Background, Title, Sorting and Table
