@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Suspense} from 'react';
 import ReactDOM from 'react-dom';
 import 'status-indicator/styles.css'
 import Particles from "./Particles";
@@ -11,7 +11,10 @@ import Dropdown from 'react-bootstrap/Dropdown'
 import DropdownButton from 'react-bootstrap/DropdownButton'
 import './index.css';
 import { sortByDate, sortByAlphabetical, sortByStatus } from './sorting.js'
-import { PingSampleVison, PingLIMS, PingFTP, PingEmail } from './ping.js'
+import { formatDate } from './formatDate.js'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { Spinner } from "react-bootstrap";
 
 // Visually indicate either online or offline for server
 const Online = (props) => {
@@ -27,57 +30,52 @@ const Status = (props) => {
 }
 
 const PingServer = async (props) => {
-    const serverType = props.serverType;
-    switch (serverType) {
-      case "SampleVision":
-          try {
-              const result = await PingSampleVison(props);
-              console.log(result)
-          }
-          catch(err) {
-            console.log('Unable to get status of server: ' ,err.status)
-            console.log(err)
-          }
-          break;
-      case "LIMS":
-          PingLIMS(props); break;
-      case "FTP":
-          PingFTP(props); break;
-      case "Email":
-          PingEmail(props); break;
+    try {
+        const serverName = props.serverName
+        const serverURL = process.env.REACT_APP_SERVER_URL + "/servers/" + serverName
+        const response = await fetch(serverURL);
+        (response?.status === 200)
+            ? toast.success("Server online!", { theme: 'dark' })
+            : toast.error("Server offline!", { theme: 'dark' })
+        console.log(response)
+    } catch (error) {
+        console.log(error)
     }
 }
 
 // Button to manually check if a server is back online
 const RefreshStatusButton = (props) => {
-    // Normal
+     return (
+        <Suspense fallback={<Loading />}>
+            <span>
+                <Button variant="outline-light" size="sm" type="button"
+                        onClick={async () => {
+                            const status = await PingServer(props.value)
+                            console.log(status)}}> Check Status
+                </Button>
+                <ToastContainer/>
+            </span>
+        </Suspense>
+     )
+}
+const Loading = () => {
     return (
-        <Button variant="outline-light" size="sm" type="button"
-            onClick={async () => {
-              const status = await PingServer(props.value)
-            console.log(status)}}>
-            Check Status
+        <Button type="button" variant="outline-light" size="sm">
+            <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true"/> Refreshing...
         </Button>
     )
-    // While refreshing
-    // return (
-    //     <Button type="button" variant="outline-light" size="sm">
-    //         <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true"/>
-    //         Refreshing...
-    //     </Button>
-    // )
 }
 
 // How long the server has been down for
 const OfflineSince = (props) => {
     const offlineSince = props.value;
-    return <p>{offlineSince}</p>
+    return <p>{formatDate(offlineSince)}</p>
 }
 
 // Time since the server was last refreshed to check online status
 const LastChecked = (props) => {
     const lastChecked = props.value;
-    return <p>{lastChecked}</p>
+    return <p>{formatDate(lastChecked)}</p>
 }
 
 class Server extends React.Component {
@@ -116,10 +114,6 @@ class ServerList extends React.Component {
           serverLink={server.serverLink}
           offlineSince={server.offlineSince}
           lastChecked={server.lastChecked}
-          lims={server.lims}
-          connectionID={server.connectionID}
-          connectionPassword={server.connectionPassword}
-          databaseName={server.databaseName}
           port={server.port}
         />
       );

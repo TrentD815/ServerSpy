@@ -14,20 +14,29 @@ router.get('/servers', async function(req, res) {
     } catch (error) {
         return res.status(500).send(error.message)
     }
-});
+})
 
 router.get('/servers/:serverName', async function(req, res) {
     try {
         const serverName = req.params.serverName
-        console.log(serverName)
         const collection = req.collection
         const projection = { _id: 0, object: 0 }
-        const server = await collection.find({ object: 'server', serverName: serverName }).project(projection).toArray() || []
+        let server = await collection.find({ object: 'server', serverName: serverName }).project(projection).toArray() || []
+        server = server[0]
+        const savedOnlineStatus = server.online
+        if (!server) return res.status(404).send('Server name not found.')
+
+        const pingResponse = await fetch(server.serverLink + '/live')
+        server.online = (pingResponse?.status === 200)
+        server.lastChecked = new Date()
+        if (!server.online && (server.online !== savedOnlineStatus)) server.offlineSince = new Date()
+
+        await collection.updateOne({ object: 'server', serverName: serverName }, { $set: server })
         return res.status(200).send(server)
     } catch (error) {
         return res.status(500).send(error.message)
     }
-});
+})
 
 
 module.exports = router;
