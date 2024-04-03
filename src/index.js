@@ -1,4 +1,4 @@
-import React, {Suspense} from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import 'status-indicator/styles.css'
 import Particles from "./Particles";
@@ -43,39 +43,44 @@ const PingServer = async (props) => {
     }
 }
 
-// Button to manually check if a server is back online
-const RefreshStatusButton = (props) => {
-     return (
-        <Suspense fallback={<Loading />}>
-            <span>
-                <Button variant="outline-light" size="sm" type="button"
-                        onClick={async () => {
-                            const status = await PingServer(props.value)
-                            console.log(status)}}> Check Status
-                </Button>
-                <ToastContainer/>
+const CheckStatusWithLoading = (props) => {
+    const [loading, setLoading] = useState(false);
+    const fetchData = async () => {
+        try {
+            setLoading(true);
+            await PingServer(props.value)
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+    return (
+        <div>
+            <span onClick={fetchData}>
+                { loading ? <Loading/> : <RefreshStatusButton/> }
             </span>
-        </Suspense>
+        </div>
+    );
+};
+
+// Button to manually check if a server is back online
+const RefreshStatusButton = () => {
+     return (
+        <span>
+            <Button variant="outline-light" size="sm" type="button">Check Status</Button>
+            <ToastContainer/>
+        </span>
      )
 }
+
+// Altered button which has a spinner and loading text. Rendered while servers are being refreshed
 const Loading = () => {
     return (
         <Button type="button" variant="outline-light" size="sm">
             <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true"/> Refreshing...
         </Button>
     )
-}
-
-// How long the server has been down for
-const OfflineSince = (props) => {
-    const offlineSince = props.value;
-    return <p>{formatDate(offlineSince)}</p>
-}
-
-// Time since the server was last refreshed to check online status
-const LastChecked = (props) => {
-    const lastChecked = props.value;
-    return <p>{formatDate(lastChecked)}</p>
 }
 
 class Server extends React.Component {
@@ -89,9 +94,9 @@ class Server extends React.Component {
                 <td>{this.props.serverName}</td>
                 <td>{this.props.serverType}</td>
                 <td>{this.props.serverLink}</td>
-                <td><OfflineSince value={this.props.offlineSince}/></td>
-                <td><LastChecked value={this.props.lastChecked}/></td>
-                <td><RefreshStatusButton value={this.props}/></td>
+                <td><p>{formatDate(this.props.offlineSince)}</p></td>
+                <td><p>{formatDate(this.props.lastChecked)}</p></td>
+                <td><CheckStatusWithLoading value={this.props}/></td>
             </tr>
         )
     }
@@ -118,7 +123,6 @@ class ServerList extends React.Component {
         />
       );
     });
-
     return (
         <Table responsive striped bordered hover variant="dark" size="sm">
             <thead>
@@ -199,7 +203,7 @@ class App extends React.Component {
             </div>
             <Row className="align-items-center">
               <Col xs={3}><h1>Server Spy</h1></Col>
-              <Col xs={9}>
+              <Col xs={6}>
                   <DropdownButton variant='Secondary' size="sm" id="dropdown-basic-button" title="Sort By">
                       <Dropdown.Item onClick={() => this.handleSorting("Status")}>Status</Dropdown.Item>
                       <Dropdown.Item onClick={() => this.handleSorting("Name")}>Server Name</Dropdown.Item>
@@ -209,6 +213,9 @@ class App extends React.Component {
                       <Dropdown.Item onClick={() => this.handleSorting("Last Checked")}>Last Checked</Dropdown.Item>
                   </DropdownButton>
               </Col>
+                <Col style={{ display: 'flex', justifyContent : 'flex-end' }} xs={3} >
+                    <Button  variant='Secondary' size="sm" id="dropdown-basic-button" title="Refresh All">Refresh All</Button>
+                </Col>
             </Row>
             <div className="align-items-center"> <ServerList sortType={this.state.sortType} Servers={this.state.Servers}/></div>
         </div>
