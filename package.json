@@ -8,7 +8,7 @@
     "start": "craco --env-file=.env start",
     "build": "craco build",
     "test": "craco test",
-    "prettier": "prettier --write /src/index.js"
+    "prettier": "prettier --write ./src/index.js"
   },
   "author": "Trent Davis",
   "license": "ISC",
