@@ -15,6 +15,7 @@ import { formatDate } from './formatDate.js'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { Spinner } from 'react-bootstrap'
+import SortableTableColumn from './sortableTable.js';
 
 // Visually indicate either online or offline for server
 const Online = (props) => {
@@ -111,8 +112,16 @@ class Server extends React.Component {
 class ServerList extends React.Component {
 	constructor(props) {
 		super(props)
+		this.state = {
+			sortedData: this.props.Servers
+		}
 	}
+	handleSort = sortedData => {
+		this.setState({ sortedData });
+	}
+
 	render() {
+		const { sortedData } = this.state;
 		const rows = []
 		this.props.Servers.forEach((server) => {
 			rows.push(
@@ -124,19 +133,19 @@ class ServerList extends React.Component {
 					offlineSince={server.offlineSince}
 					lastChecked={server.lastChecked}
 					port={server.port}
-				/>,
+				/>
 			)
 		})
 		return (
 			<Table responsive striped bordered hover variant="dark" size="sm">
 				<thead>
 					<tr>
-						<th>Status</th>
-						<th>Server Name</th>
-						<th>Server Type</th>
-						<th>Server Link</th>
-						<th>Offline Since</th>
-						<th>Last Checked</th>
+						<SortableTableColumn data={sortedData} columnName="online" onSort={this.handleSort} />
+						<SortableTableColumn data={sortedData} columnName="serverName" onSort={this.handleSort} />
+						<SortableTableColumn data={sortedData} columnName="serverType" onSort={this.handleSort}/>
+						<SortableTableColumn data={sortedData} columnName="serverLink" onSort={this.handleSort}/>
+						<SortableTableColumn data={sortedData} columnName="offlineSince" onSort={this.handleSort}/>
+						<SortableTableColumn data={sortedData} columnName="lastChecked" onSort={this.handleSort}/>
 						<th>Refresh</th>
 					</tr>
 				</thead>
@@ -180,9 +189,7 @@ class App extends React.Component {
 				sorted = this.state.Servers
 		}
 
-		this.setState({
-			Servers: sorted,
-		})
+		this.setState({ Servers: sorted })
 	}
 
 	async componentDidMount() {
@@ -191,16 +198,9 @@ class App extends React.Component {
 			console.log(serverURL)
 			let response = await fetch(serverURL)
 			const result = await response.json()
-			console.log(result)
-			this.setState({
-				isLoaded: true,
-				Servers: result,
-			})
+			this.setState({ isLoaded: true, Servers: result })
 		} catch (error) {
-			this.setState({
-				isLoaded: true,
-				error,
-			})
+			this.setState({ isLoaded: true, error })
 		}
 	}
 
@@ -236,5 +236,25 @@ class App extends React.Component {
 		)
 	}
 }
+
+
+
+const YourTable = ({ data }) => {
+	return (
+		<table>
+			<thead>
+			<tr>
+				<SortableTableColumn data={data} columnName="Name" />
+				<SortableTableColumn data={data} columnName="Age" />
+				{/* Add more sortable columns as needed */}
+			</tr>
+			</thead>
+			{/* Render table body */}
+		</table>
+	);
+};
+
+export default YourTable;
+
 //Render all parts of the app
 ReactDOM.render(<App Servers={[{}]} />, document.getElementById('root'))
