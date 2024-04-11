@@ -100,7 +100,7 @@ class Server extends React.Component {
 				<td>{this.props.serverName}</td>
 				<td>{this.props.serverType}</td>
 				<td>{this.props.serverLink}</td>
-				<td><p>{formatDate(this.props.offlineSince)}</p></td>
+				<td><p>{(this.props.online) ? 'Currently Online' : formatDate(this.props.offlineSince)}</p></td>
 				<td><p>{formatDate(this.props.lastChecked)}</p></td>
 				<td><CheckStatusWithLoading value={this.props}/></td>
 			</tr>
@@ -124,7 +124,8 @@ class ServerList extends React.Component {
 		const { sortedData } = this.state;
 		const rows = []
 		this.props.Servers.forEach((server) => {
-			rows.push(
+			//server.serverLink = 'https://[REDACTED].azurewebsites.net'
+				rows.push(
 				<Server
 					online={server.online}
 					serverType={server.serverType}

@@ -22,4 +22,8 @@ Server Link, Offline Since, and Last Checked
 - This project is strictly educational and not for commercial use
 
 ## Gallery
-[//]: # (<img src="" height=400 alt="Server Spy Interface">)
+### Interface
+<img src="./assets/ServerSpy.png" height=400 alt="Server Spy Interface">
+
+### Background Particle Animation
+<video src="./assets/ServerSpyParticleAnimation.mp4" height=400></video>
