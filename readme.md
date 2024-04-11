@@ -26,4 +26,4 @@ Server Link, Offline Since, and Last Checked
 <img src="./assets/ServerSpy.png" height=400 alt="Server Spy Interface">
 
 ### Background Particle Animation
-<video src="./assets/ServerSpyParticleAnimation.mp4" height=400></video>
+https://raw.githubusercontent.com/TrentD815/ServerSpy/master/assets/ServerSpyParticleAnimation.mp4
